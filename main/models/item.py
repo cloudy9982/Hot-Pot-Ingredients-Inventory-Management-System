@@ -7,10 +7,11 @@ class Item(db.Model):
     name = db.Column(db.String(20), unique=True, nullable=False)
     price = db.Column(db.Integer, nullable=False)
     unit = db.Column(db.String(5), nullable=False)
-    tag = db.Column(db.String(20), nullable=False)
+    tag_id = db.Column(db.String(20), db.ForeignKey(
+        'tag.id'), nullable=False)
 
-    def __init__(self, name, price, unit, tag):
+    def __init__(self, name, price, unit, tag_id):
         self.name = name
         self.price = price
         self.unit = unit
-        self.tag = tag
+        self.tag_id = tag_id
