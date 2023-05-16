@@ -20,7 +20,6 @@ class TagService:
     def create(self, data):
         tag = Tag.query.filter_by(name=data['name']).first()
         if not tag:
-            print(tag)
             new_tag = Tag(name=data['name'])
             save(new_tag)
             return self.tag_schema.jsonify(new_tag)

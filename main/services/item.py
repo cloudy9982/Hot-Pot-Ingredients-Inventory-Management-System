@@ -35,7 +35,7 @@ class ItemService:
             item.name = data['name'],
             item.price = data['price'],
             item.unit = data['unit'],
-            item.tag_name = data['tag']
+            item.tag_id = data['tag_id']
             save(item)
             return self.item_schema.jsonify(item)
 
@@ -45,6 +45,7 @@ class ItemService:
             delete(item)
             return item_id
 
-    def get_by_tag_id(self, Tag_id):  # 藉由tag_id獲得同屬該tag之item
-        item = Item.query.filter_by(tag_id=Tag_id).all()  # 查找所有tag_id為輸入數值之資料
+    def get_tag_id(self, tag_id):  # 藉由tag_id獲得同屬該tag之item
+        item = Item.query.filter_by(tag_id=tag_id)  # 查找所有tag_id為輸入數值之資料
+        print(item)
         return jsonify(self.items_schema.dump(item))  # 回傳資料

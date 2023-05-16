@@ -3,7 +3,7 @@ from flask_restful import Api
 from flask_migrate import Migrate
 from flask_cors import CORS
 from main.controllers.welcome import HelloWorld
-from main.controllers.item import GetAllItem, GetItem, PostItem, UpdateItem, DeleteItem
+from main.controllers.item import GetAllItem, GetItem, PostItem, UpdateItem, DeleteItem, GetItemByTag
 from main.controllers.tag import GetAllTag, GetTag, PostTag, UpdateTag, DeleteTag
 from main.models._db import db
 from main.schemas._ma import ma
@@ -28,6 +28,9 @@ api.add_resource(GetItem, '/items/<int:id>')
 api.add_resource(PostItem, '/items')
 api.add_resource(UpdateItem, '/items/<int:id>')
 api.add_resource(DeleteItem, '/items/<int:id>')
+
+api.add_resource(GetItemByTag, '/items/tags/<int:tag_id>')
+
 # Tag api
 api.add_resource(GetAllTag, '/tags')
 api.add_resource(GetTag, '/tags/<int:id>')
