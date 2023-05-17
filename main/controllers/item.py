@@ -5,11 +5,6 @@ from main.services.item import ItemService
 service = ItemService()
 
 
-class GetItemByTag(Resource):
-    def get(self, tag_id):
-        return service.get_tag_id(tag_id=tag_id)
-
-
 class GetAllItem(Resource):
     def get(self):
         return service.get_all()

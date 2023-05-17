@@ -44,8 +44,3 @@ class ItemService:
         if item:
             delete(item)
             return item_id
-
-    def get_tag_id(self, tag_id):  # 藉由tag_id獲得同屬該tag之item
-        item = Item.query.filter_by(tag_id=tag_id)  # 查找所有tag_id為輸入數值之資料
-        print(item)
-        return jsonify(self.items_schema.dump(item))  # 回傳資料
