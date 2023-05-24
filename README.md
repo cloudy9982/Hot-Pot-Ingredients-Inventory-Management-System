@@ -6,12 +6,12 @@
 # 操作
 ` flask run ` or `python app.py `
 
-# frontend connected backend
+> frontend connected backend
 clone front 後，下載完能正常開啟，操作以下指令
 
-## backend
+>> backend
 ` flask run --port=8081`
 
-## frontend
+>> frontend
 ` npm start `
 

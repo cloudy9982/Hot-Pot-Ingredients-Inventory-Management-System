@@ -9,36 +9,38 @@ from main.models._db import db
 from main.schemas._ma import ma
 
 
-app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///./back_demo.db'
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+class App(Flask):
+    def __init__(self):
+        super().__init__(__name__)
+        self.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///./back_demo.db'
+        self.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
-cors = CORS(app, resources={r"/*": {"origins": "*"}})
+        cors = CORS(self, resources={r"/*": {"origins": "*"}})
 
-api = Api(app)
-db.init_app(app)
-ma.init_app(app)
-migrate = Migrate(app, db)
+        api = Api(self)
+        db.init_app(self)
+        ma.init_app(self)
+        migrate = Migrate(self, db)
 
-# api
-api.add_resource(HelloWorld, '/')
-# Item api
-api.add_resource(GetAllItem, '/item')
-api.add_resource(GetItem, '/item/<int:id>')
-api.add_resource(PostItem, '/item')
-api.add_resource(UpdateItem, '/item/<int:id>')
-api.add_resource(DeleteItem, '/item/<int:id>')
+        # api
+        api.add_resource(HelloWorld, '/')
+        # Item api
+        api.add_resource(GetAllItem, '/item')
+        api.add_resource(GetItem, '/item/<int:id>')
+        api.add_resource(PostItem, '/item')
+        api.add_resource(UpdateItem, '/item/<int:id>')
+        api.add_resource(DeleteItem, '/item/<int:id>')
+        # Tag api
+        api.add_resource(GetAllTag, '/tag')
+        api.add_resource(GetTag, '/tags/<int:id>')
+        api.add_resource(PostTag, '/tags')
+        api.add_resource(UpdateTag, '/tags/<int:id>')
+        api.add_resource(DeleteTag, '/tags/<int:id>')
 
-# Tag api
-api.add_resource(GetAllTag, '/tags')
-api.add_resource(GetTag, '/tags/<int:id>')
-api.add_resource(PostTag, '/tags')
-api.add_resource(UpdateTag, '/tags/<int:id>')
-api.add_resource(DeleteTag, '/tags/<int:id>')
+        with self.app_context():
+            db.create_all()
 
-
-with app.app_context():
-    db.create_all()
 
 if __name__ == '__main__':
+    app = App()
     app.run(debug=True)
