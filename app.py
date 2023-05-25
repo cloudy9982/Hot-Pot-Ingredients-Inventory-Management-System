@@ -23,15 +23,15 @@ class App(Flask):
         migrate = Migrate(self, db)
 
         # api
-        api.add_resource(HelloWorld, '/')
+        api.add_resource(HelloWorld, '/')  # ok
         # Item api
-        api.add_resource(GetAllItem, '/item')
-        api.add_resource(GetItem, '/item/<int:id>')
-        api.add_resource(PostItem, '/item')
+        api.add_resource(GetAllItem, '/item')  # ok
+        api.add_resource(GetItem, '/item/<int:id>')  # ok
+        api.add_resource(PostItem, '/item')  # ok
         api.add_resource(UpdateItem, '/item/<int:id>')
         api.add_resource(DeleteItem, '/item/<int:id>')
         # Tag api
-        api.add_resource(GetAllTag, '/tag')
+        api.add_resource(GetAllTag, '/tag')  # ok
         api.add_resource(GetTag, '/tags/<int:id>')
         api.add_resource(PostTag, '/tags')
         api.add_resource(UpdateTag, '/tags/<int:id>')
@@ -43,4 +43,4 @@ class App(Flask):
 
 if __name__ == '__main__':
     app = App()
-    app.run(debug=True)
+    app.run(debug=True, port=8081)
