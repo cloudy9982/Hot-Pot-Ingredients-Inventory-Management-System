@@ -26,8 +26,8 @@ class FlaskAppTestCase(unittest.TestCase):
         db.session.commit()
 
     def tearDown(self):
-        # db.session.remove()
-        # db.drop_all()
+        db.session.remove()
+        db.drop_all()
         pass
 
     def test_home(self):

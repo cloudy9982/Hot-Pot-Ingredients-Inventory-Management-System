@@ -10,24 +10,26 @@ class TagService:
         self.tag_schema = TagSchema()
         self.tags_schema = TagSchema(many=True)
 
-    def get_all(self):  # ok
-        items = Item.query.join(Tag).all()
+    def get_all(self):
+        tags = Tag.query.all()
         results = {}
-        for item in items:
-            if item.tag_id not in results:
-                results[item.tag_id] = {
-                    "id": item.tag_id,
-                    "name": item.tag.name,
-                    "items": []
+        for tag in tags:
+            results[tag.tag_id] = {
+                "id": tag.tag_id,
+                "name": tag.name,
+                "items": []
+            }
+            items = Item.query.filter_by(tag_id=tag.tag_id).all()
+            for item in items:
+                item_data = {
+                    "id": item.id,
+                    "name": item.name,
+                    "price": item.price,
+                    "unit": item.unit,
+                    "tagId": item.tag_id
                 }
+                results[tag.tag_id]["items"].append(item_data)
 
-            results[item.tag_id]["items"].append({
-                "id": item.id,
-                "name": item.name,
-                "price": item.price,
-                "unit": item.unit,
-                "tagId": item.tag_id
-            })
         return jsonify(list(results.values()))
 
     def get(self, tag_id):
@@ -50,6 +52,7 @@ class TagService:
 
     def delete(self, tag_id):
         tag = Tag.query.get(tag_id)
+        print(tag_id)
         if tag:
             delete(tag)
             return tag_id

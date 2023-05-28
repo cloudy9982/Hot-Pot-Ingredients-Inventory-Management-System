@@ -42,12 +42,13 @@ class ItemService:
             return self.item_schema.jsonify(new_item)
 
     def update(self, item_id, data):
-        item = Item.query.join(Tag).get(item_id)
+        # item = Item.query.join(Tag).get(item_id)
+        item = Item.query.join(Tag).filter(Item.id == item_id).first()
         print(item)
         if item:
-            item.name = data['name'],
-            item.price = data['price'],
-            item.unit = data['unit'],
+            item.name = data['name']
+            item.price = data['price']
+            item.unit = data['unit']
             item.tag_id = data['tag']
         save(item)
         return self.item_schema.jsonify(item)

@@ -7,6 +7,8 @@ from main.controllers.item import GetAllItem, GetItem, PostItem, UpdateItem, Del
 from main.controllers.tag import GetAllTag, GetTag, PostTag, UpdateTag, DeleteTag
 from main.models._db import db
 from main.schemas._ma import ma
+from main.models.tag import Tag
+from main.models.item import Item
 
 
 class App(Flask):
@@ -28,14 +30,14 @@ class App(Flask):
         api.add_resource(GetAllItem, '/item')  # ok
         api.add_resource(GetItem, '/item/<int:id>')  # ok
         api.add_resource(PostItem, '/item')  # ok
-        api.add_resource(UpdateItem, '/item/<int:id>')
-        api.add_resource(DeleteItem, '/item/<int:id>')
+        api.add_resource(UpdateItem, '/item/<int:id>')  # ok
+        api.add_resource(DeleteItem, '/item/<int:id>')  # ok
         # Tag api
-        api.add_resource(GetAllTag, '/tag')  # ok
-        api.add_resource(GetTag, '/tags/<int:id>')
-        api.add_resource(PostTag, '/tags')
-        api.add_resource(UpdateTag, '/tags/<int:id>')
-        api.add_resource(DeleteTag, '/tags/<int:id>')
+        api.add_resource(GetAllTag, '/tag')  # ok ,tag裡面的內容刪除乾淨後，裡面沒有內容的話會搜尋不到
+        api.add_resource(GetTag, '/tag/<int:id>')  # ok
+        api.add_resource(PostTag, '/tag')  # ok
+        api.add_resource(UpdateTag, '/tag/<int:id>')  # 前端有bug，測試ok
+        api.add_resource(DeleteTag, '/tag/<int:id>')  # 前端有bug，測試ok
 
         with self.app_context():
             db.create_all()
