@@ -10,7 +10,7 @@ class ItemService:
         self.item_schema = ItemSchema()
         self.items_schema = ItemSchema(many=True)
 
-    def get_all(self):  # ok
+    def get_all(self):
         items = Item.query.join(Tag).all()
         results = []
         for item in items:
@@ -28,7 +28,7 @@ class ItemService:
         item = Item.query.get(item_id)
         return self.item_schema.jsonify(item)
 
-    def create(self, data):  # ok
+    def create(self, data):
         item = Item.query.filter_by(name=data['name']).first()
         if not item:
             new_item = Item(
@@ -42,7 +42,6 @@ class ItemService:
             return self.item_schema.jsonify(new_item)
 
     def update(self, item_id, data):
-        # item = Item.query.join(Tag).get(item_id)
         item = Item.query.join(Tag).filter(Item.id == item_id).first()
         print(item)
         if item:

@@ -1,5 +1,6 @@
 from main.models.item import Item
 from main.models.tag import Tag
+from main.models.order import Order
 from main.models._db import db
 from faker import Faker
 from app import App
@@ -11,21 +12,24 @@ app = App()
 # 生成假資料
 fake_items = []
 fake_tags = []
+fake_orders = []
 
 # item
-for _ in range(6):
-    name = fake.word()
-    price = str(fake.random_int(min=1, max=6))
-    unit = fake.word()
-    tag_id = fake.random_int(min=1, max=6)
-    item = Item(name=name, price=price, unit=unit, tag_id=tag_id)
-    fake_items.append(item)
+item = Item(name="青椒", price="20", unit="個", tag_id='1')
+fake_items.append(item)
+item = Item(name='花生', price='20', unit='粒', tag_id='2')
+fake_items.append(item)
 
 # tag
-for _ in range(6):
-    name = fake.word()
-    tag = Tag(name=name)
-    fake_tags.append(tag)
+tag = Tag(name='蔬菜')
+fake_tags.append(tag)
+tag = Tag(name='關東煮')
+fake_tags.append(tag)
+
+# order
+amount = fake.random_int(min=1, max=6)
+order = Order(amount=amount)  # 创建订单模型类的实例
+fake_orders.append(order)  # 将订单实例添加到fake_orders列表中
 
 with app.app_context():
     # 將假資料插入資料庫
@@ -34,4 +38,7 @@ with app.app_context():
 
     for tag in fake_tags:
         db.session.add(tag)
+
+    for order in fake_orders:
+        db.session.add(order)
     db.session.commit()
