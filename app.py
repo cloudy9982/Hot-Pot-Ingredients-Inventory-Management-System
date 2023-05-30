@@ -38,12 +38,12 @@ class App(Flask):
         api.add_resource(GetTag, "/tag/<int:id>")  # ok
         api.add_resource(PostTag, "/tag")  # ok
         api.add_resource(UpdateTag, "/tag/<int:id>")  # 前端有bug，測試ok
-        api.add_resource(DeleteTag, "/tag/<int:id>")  # 前端有bug，測試ok
+        api.add_resource(DeleteTag, "/tag/<int:id>")  # ok
 
         # Order api
         api.add_resource(GetAllOrder, "/order")
-        api.add_resource(GetOrder, "/order/<int:id>")
-        api.add_resource(PostOrder, "/order")
+        # api.add_resource(GetOrder, "/order/<int:id>")
+        # api.add_resource(PostOrder, "/order")
 
         with self.app_context():
             db.create_all()

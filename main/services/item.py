@@ -14,14 +14,15 @@ class ItemService:
         items = Item.query.join(Tag).all()
         results = []
         for item in items:
-            results.append({
-                "id": item.id,
-                "name": item.name,
-                "price": item.price,
-                "unit": item.unit,
-                "tagId": item.tag_id
-            })
-        print(results)
+            results.append(
+                {
+                    "id": item.id,
+                    "name": item.name,
+                    "price": item.price,
+                    "unit": item.unit,
+                    "tagId": item.tag_id,
+                }
+            )
         return jsonify(results)
 
     def get(self, item_id):
@@ -29,26 +30,24 @@ class ItemService:
         return self.item_schema.jsonify(item)
 
     def create(self, data):
-        item = Item.query.filter_by(name=data['name']).first()
+        item = Item.query.filter_by(name=data["name"]).first()
         if not item:
             new_item = Item(
-                name=data['name'],
-                price=data['price'],
-                unit=data['unit'],
-                tag_id=data['tag']
+                name=data["name"],
+                price=data["price"],
+                unit=data["unit"],
+                tag_id=data["tag"],
             )
             save(new_item)
-            print(jsonify(new_item))
             return self.item_schema.jsonify(new_item)
 
     def update(self, item_id, data):
         item = Item.query.join(Tag).filter(Item.id == item_id).first()
-        print(item)
         if item:
-            item.name = data['name']
-            item.price = data['price']
-            item.unit = data['unit']
-            item.tag_id = data['tag']
+            item.name = data["name"]
+            item.price = data["price"]
+            item.unit = data["unit"]
+            item.tag_id = data["tag"]
         save(item)
         return self.item_schema.jsonify(item)
 
