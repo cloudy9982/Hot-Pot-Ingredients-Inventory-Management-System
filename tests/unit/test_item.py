@@ -7,12 +7,17 @@ from main.models.tag import Tag
 from main.models._db import db
 from main.schemas._ma import ma
 from main.schemas.item import ItemSchema
+import logging
+import os
 
 
 class FlaskAppTestCase(unittest.TestCase):
     @classmethod
     def setUp(self):
+        if os.path.exists("back_demo.db"):
+            os.remove("back_demo.db")
         self.app = App().test_client()
+        logging.getLogger("werkzeug").setLevel(logging.ERROR)
         self.app_context = App().app_context()
         self.app_context.push()
         db.create_all()
@@ -31,13 +36,6 @@ class FlaskAppTestCase(unittest.TestCase):
     def tearDown(self):
         db.session.remove()
         db.drop_all()
-
-    def test_home(self):
-        response = self.app.get("/")
-        self.assertEqual(response.status_code, 200)
-        result = json.loads(response.data.decode("utf-8"))
-        assert "hello" in result
-        assert result["hello"] == "world"
 
     def test_all_item(self):
         response = self.app.get("/item")

@@ -2,22 +2,24 @@ import unittest
 from flask import Flask
 from app import App
 import json
+import logging
+import os
+from tests.functional.home import testHome
 
 
 class FlaskAppTestCase(unittest.TestCase):
     @classmethod
     def setUp(self):
+        if os.path.exists("back_demo.db"):
+            os.remove("back_demo.db")
         self.app = App().test_client()
+        logging.getLogger("werkzeug").setLevel(logging.ERROR)
 
     def tearDown(self):
         pass
 
     def test_home(self):
-        response = self.app.get("/")
-        self.assertEqual(response.status_code, 200)
-        result = json.loads(response.data.decode("utf-8"))
-        assert "hello" in result
-        assert result["hello"] == "world"
+        return testHome()
 
 
 def suite():

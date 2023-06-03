@@ -5,12 +5,17 @@ import json
 from main.models.tag import Tag
 from main.models._db import db
 from main.schemas._ma import ma
+import logging
+import os
 
 
 class FlaskAppTestCase(unittest.TestCase):
     @classmethod
     def setUp(self):
+        if os.path.exists("back_demo.db"):
+            os.remove("back_demo.db")
         self.app = App().test_client()
+        logging.getLogger("werkzeug").setLevel(logging.ERROR)
         self.app_context = App().app_context()
         self.app_context.push()
         db.create_all()
