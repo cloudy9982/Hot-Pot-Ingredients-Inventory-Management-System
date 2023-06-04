@@ -8,6 +8,7 @@ from main.controllers.tag import GetAllTag, GetTag, PostTag, UpdateTag, DeleteTa
 from main.controllers.order import GetAllOrder, PostOrder
 from main.models._db import db
 from main.schemas._ma import ma
+from flask_socketio import SocketIO
 
 
 class App(Flask):
@@ -47,4 +48,6 @@ class App(Flask):
 
 if __name__ == "__main__":
     app = App()
+    CORS(app)
+    socketio = SocketIO(app, cors_allowed_origins="*")
     app.run(debug=True, port=8081)

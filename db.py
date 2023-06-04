@@ -2,10 +2,7 @@ from main.models.item import Item
 from main.models.tag import Tag
 from main.models.order import Order, LineItem
 from main.models._db import db
-from faker import Faker
 from app import App
-
-fake = Faker()
 
 app = App()
 
