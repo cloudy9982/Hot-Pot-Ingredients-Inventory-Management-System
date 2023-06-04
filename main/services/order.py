@@ -1,7 +1,11 @@
 from main.models._db import save, delete
 from flask import jsonify
-from main.models.order import Order
+from main.models.order import Order, LineItem
+from main.models.item import Item
 from main.schemas.order import OrderSchema
+import pytz
+
+tz = pytz.timezone("Asia/Taipei")
 
 
 class OrderService:
@@ -13,29 +17,63 @@ class OrderService:
         orders = Order.query.all()
         results = []
         for order in orders:
-            results.append({
-                "id": order.id,
-                "name": order.name,
-                "price": order.price,
-                "unit": order.unit,
-                "tagId": order.tag_id
-            })
-        print(results)
+            lineitems = LineItem.query.filter_by(order_id=order.id).all()
+            lineitems_data = []
+            for item in lineitems:
+                lineitems_data.append(
+                    {
+                        "id": item.item_id,
+                        "amount": item.amount,
+                        "name": item.name,
+                        "price": item.price,
+                        "unit": item.unit,
+                        "totalPrice": item.totalPrice,
+                    }
+                )
+            results.append(
+                {
+                    "id": order.id,
+                    "date": order.time.strftime("%Y-%m-%d %H:%M:%S"),
+                    "username": order.username,
+                    "totalPrice": order.totalPrice,
+                    "lineitems": lineitems_data,
+                }
+            )
         return jsonify(results)
 
-    def get(self, order_id):
-        order = order.query.get(order_id)
-        return self.order_schema.jsonify(order)
+    def create(self, data):
+        # {
+        #     lineitems: [{
+        #         id: 4,
+        #         amount: 1
+        #     }],
+        #     username: '張曉雲'
+        # }
+        username = data["username"]
+        lineitems_data = data["lineitems"]
 
-    def create(self, data):  # ok
-        order = order.query.filter_by(name=data['name']).first()
-        if not order:
-            new_order = order(
-                name=data['name'],
-                price=data['price'],
-                unit=data['unit'],
-                tag_id=data['tag']
-            )
-            save(new_order)
-            print(jsonify(new_order))
-            return self.order_schema.jsonify(new_order)
+        # 創建並關聯LineItem
+        lineitems = []
+        for lineitem_data in lineitems_data:
+            item_id = lineitem_data["id"]
+            amount = lineitem_data["amount"]
+
+            # 根據item_id查詢對應的Item資料
+            item = Item.query.get(item_id)
+
+            if item:
+                lineitem = LineItem(
+                    item_id=item.id,
+                    name=item.name,
+                    price=item.price,
+                    unit=item.unit,
+                    amount=amount,
+                )
+                lineitems.append(lineitem)
+        # 創建訂單
+        order = Order(username=username, lineitems=lineitems)
+
+        save(order)
+        for lineitem in lineitems:
+            save(lineitem)
+        return "LineItems created successfully."
