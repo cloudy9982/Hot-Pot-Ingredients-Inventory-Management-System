@@ -1,7 +1,6 @@
 import unittest
 from flask import Flask
 from app import App
-import json
 import logging
 import os
 from tests.functional.home import testHome

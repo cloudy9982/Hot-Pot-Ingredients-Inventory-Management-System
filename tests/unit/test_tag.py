@@ -12,7 +12,7 @@ import os
 class FlaskAppTestCase(unittest.TestCase):
     @classmethod
     def setUp(self):
-        if os.path.exists("back_demo.db"):
+        if os.path.exists("../../instance/back_demo.db"):
             os.remove("back_demo.db")
         self.app = App().test_client()
         logging.getLogger("werkzeug").setLevel(logging.ERROR)
