@@ -37,13 +37,13 @@ class FlaskAppTestCase(unittest.TestCase):
 
     def test_get_tag(self):
         return testTag.get(self)
-        
+
     def test_create_tag(self):
         return testTag.create(self)
 
     def test_update_tag(self):
         return testTag.update(self)
-    
+
     def test_delete_tag(self):
         return testTag.delete(self)
 

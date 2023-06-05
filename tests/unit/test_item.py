@@ -25,8 +25,8 @@ class FlaskAppTestCase(unittest.TestCase):
         # 加入假資料
         tag1 = Tag(name="蔬菜")
         tag2 = Tag(name="關東煮")
-        item1 = Item(name="青椒", price="20", unit="顆", tag_id="1")
-        item2 = Item(name="花生", price="20", unit="粒", tag_id="2")
+        item1 = Item(name="青椒", price=20, unit="顆", tag_id=1)
+        item2 = Item(name="花生", price=20, unit="粒", tag_id=2)
         db.session.add(tag1)
         db.session.add(tag2)
         db.session.add(item1)
@@ -48,7 +48,7 @@ class FlaskAppTestCase(unittest.TestCase):
 
     def test_update_item(self):
         return testItem.update(self)
-    
+
     def test_delete_item(self):
         return testItem.delete(self)
 

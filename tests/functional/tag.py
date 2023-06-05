@@ -21,7 +21,7 @@ class testTag:
         result = json.loads(response.data.decode("utf-8"))
         self.assertIsInstance(result, list)  # 是否為list
         self.assertGreater(len(result), 0)  # data長度超過0
-    
+
     def get(self):
         tag_id = 1
         response = self.app.get(f"/tag/{tag_id}")
@@ -41,7 +41,7 @@ class testTag:
         self.assertIsInstance(result, dict)  # 是否為 dict
         self.assertIn("tag_id", result)  # 檢查字典是否包含 'id' 鍵
         self.assertEqual(result["name"], "炸物")  # 檢查 'name' 鍵對應的值是否為 '炸物'
-    
+
     def update(self):
         # 假設要更新的項目的 ID 為 1
         tag_id = 1
@@ -67,7 +67,3 @@ class testTag:
         tag_id = 1
         response = self.app.delete(f"/tag/{tag_id}")
         self.assertEqual(response.status_code, 200)
-
-        # 檢查項目是否被成功刪除
-        tag_response = self.app.get(f"/tag/{tag_id}")
-        # self.assertEqual(tag_response, "null")
