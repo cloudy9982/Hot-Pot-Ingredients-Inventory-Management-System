@@ -2,13 +2,15 @@ import logging
 import os
 import unittest
 import json
-from main.models._db import save, delete
 from flask import jsonify
 from flask import Flask
+from main.models._db import save, delete
 from app import App
 from main.models.tag import Tag
 from main.models._db import db
 from main.schemas._ma import ma
+from main.models.item import Item
+from main.schemas.item import ItemSchema
 
 class testItem:
     def all_Item(self):
