@@ -23,35 +23,39 @@ stages:          # List of stages for jobs, and their order of execution
 
 install-dependencies:
   stage: build
+  tags:
+    - back_demo
   script:
     - echo "Installing dependencies..."
     - pip install -r requirements.txt
     - echo "Dependencies installed."
-  only:
-    - master
+
 
 unit-test-job:
   stage: test
+  tags:
+    - back_demo
   script:
     - echo "Running unit tests..."
     - python -m unittest discover
     - echo "Unit tests complete."
-  only:
-    - master
+
 
 lint-test-job:   # This job also runs in the test stage.
   stage: test    # It can run at the same time as unit-test-job (in parallel).
+  tags:
+    - back_demo
   script:
     - pip install pylint  # 安裝 pylint
     - find . -name "*.py" ! -path "./tests/*" -exec pylint {} \;  # 執行 pylint 檢查除了 tests 資料夾以外的所有 .py 檔案
-  only:
-    - master
+
 
 pre-deploy:
   stage: deploy
+  tags:
+    - back_demo
   script:
     - echo "Performing database migration..."
     - python db.py
     - echo "Database migration complete."
-  only:
-    - master
+
