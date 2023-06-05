@@ -4,20 +4,21 @@
 ``` pip install -r requirements.txt ```
 
 # 使用操作
-> 說明：`python app.py `後，開另一個terminal，寫`python db.py `，fake deta才能放進去
+`python db.py`，fake deta出現在instance資料夾內
+`python app.py`，開啟主程式
 
-> frontend connected backend
+
+frontend connected backend
 clone front 後，下載完能正常開啟，操作以下指令
 
->> backend
-` python db.py`
-` python app.py`
+> backend
+`python db.py`
+`python app.py`
 
->> frontend
-依照順序操作
+> frontend
 `npm install`
 `npm run build`
-` npm start `
+`npm start `
 
 # 檢查語法
 `pylint <檔案名稱.py>`
