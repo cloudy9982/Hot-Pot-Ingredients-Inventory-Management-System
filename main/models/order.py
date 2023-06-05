@@ -27,6 +27,12 @@ class Order(db.Model):
             totalPrice += lineitem.price * lineitem.amount
         return totalPrice
 
+    def to_json(self):
+        return {
+            "username": self.username,
+            "lineitems": [lineitem.to_json() for lineitem in self.lineitems],
+        }
+
 
 class LineItem(db.Model):
     __tablename__ = "lineitem"
@@ -46,3 +52,13 @@ class LineItem(db.Model):
         self.price = price
         self.unit = unit
         self.totalPrice = self.amount * self.price
+
+    def to_json(self):
+        return {
+            "id": self.item_id,
+            "name": self.name,
+            "price": self.price,
+            "unit": self.unit,
+            "amount": self.amount,
+            # 添加其他需要序列化的字段
+        }

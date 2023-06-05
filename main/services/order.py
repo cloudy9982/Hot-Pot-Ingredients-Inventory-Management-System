@@ -42,13 +42,6 @@ class OrderService:
         return jsonify(results)
 
     def create(self, data):
-        # {
-        #     lineitems: [{
-        #         id: 4,
-        #         amount: 1
-        #     }],
-        #     username: '張曉雲'
-        # }
         username = data["username"]
         lineitems_data = data["lineitems"]
 
@@ -76,4 +69,4 @@ class OrderService:
         save(order)
         for lineitem in lineitems:
             save(lineitem)
-        return "LineItems created successfully."
+        return self.order_schema.jsonify(order)
