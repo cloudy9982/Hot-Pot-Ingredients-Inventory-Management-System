@@ -69,7 +69,11 @@ item詳細內容
 ![Image text](https://github.com/cloudy9982/Hot-Pot-Ingredients-Inventory-Management-System/blob/master/img-folde/gitlabCICD_detail.png)
 
 install-dependencies：下載requirements.txt套件環境
+
 unit-test-job：測試unittest（item,tag,order CRUD）
+
 lint-test-job：使用pylint找出潛在錯誤、程式錯誤、程式碼風格問題 => 提高程式碼的品質和可維護性
+
 coverage-job：計算代碼的覆蓋率。它可以跟踪測試用例執行期間經過的代碼行，並生成相應的報告，指示哪些代碼已經執行，哪些代碼沒有執行。
+
 pre-deploy：生成fake data
