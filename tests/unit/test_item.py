@@ -5,8 +5,6 @@ import json
 from main.models.item import Item
 from main.models.tag import Tag
 from main.models._db import db
-from main.schemas._ma import ma
-from main.schemas.item import ItemSchema
 import logging
 import os
 
